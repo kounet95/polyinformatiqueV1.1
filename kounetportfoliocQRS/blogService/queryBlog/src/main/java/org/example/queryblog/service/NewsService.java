@@ -3,14 +3,11 @@ package org.example.queryblog.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
-import com.example.polyinformatiquecommon.Customer;
-import com.example.polyinformatiquecommon.blog.Comment;
-import com.example.polyinformatiquecommon.blog.Tag;
+
 import org.example.polyinformatiquecoreapi.event.NewsCreatedEvent;
 import org.example.polyinformatiquecoreapi.event.NewsUpdatedEvent;
 import org.example.polyinformatiquecoreapi.event.ItemDeletedEvent;
-import org.example.queryblog.entite.Domain;
-import org.example.queryblog.entite.News;
+import org.example.queryblog.entite.*;
 import org.example.queryblog.repos.*;
 import org.springframework.stereotype.Component;
 

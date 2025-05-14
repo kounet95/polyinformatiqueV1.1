@@ -1,8 +1,6 @@
 package org.example.ecpolyquery.entity;
 
-import com.example.polyinformatiquecommon.blog.Comment;
-import com.example.polyinformatiquecommon.blog.Item;
-import com.example.polyinformatiquecommon.ecommerce.Orderecommerce;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -41,11 +39,5 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Orderecommerce> orders;
 
-    // Relations blog
-    @OneToMany
-    private List<Comment> commentList;
 
-    @OneToMany
-    @JoinColumn(name = "utilisateur")
-    private List<Item> items;
 }

@@ -3,13 +3,13 @@ package org.example.ecpolyquery.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
+import org.example.ecpolyquery.entity.Customer;
 import org.example.ecpolyquery.entity.Orderecommerce;
 import org.example.ecpolyquery.repos.CustomerRepository;
 import org.example.ecpolyquery.repos.OrderLineRepository;
 import org.example.ecpolyquery.repos.OrderecommerceRepository;
 import org.example.ecpolyquery.repos.ProductRepository;
 
-import com.example.polyinformatiquecommon.Customer;
 import org.example.polyinformatiquecoreapi.dtoEcommerce.OrderDTO;
 import org.example.polyinformatiquecoreapi.eventEcommerce.OrderCancelledEvent;
 import org.example.polyinformatiquecoreapi.eventEcommerce.OrderConfirmedEvent;

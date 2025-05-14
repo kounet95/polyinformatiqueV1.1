@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @SpringBootApplication
-@EntityScan(basePackages = {
-        "com.example.polyinformatiquecommon.blog",
-        "com.example.polyinformatiquecommon"
-})
+
 public class QueryBlogApplication {
 
     public static void main(String[] args) {
