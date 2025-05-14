@@ -12,7 +12,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="polyinformatique-core-API" />
-        <module name="polyinformatique-common" />
         <module name="commandeBlog" />
         <module name="ecPolyQuery" />
         <module name="ecPolyCommand" />
@@ -27,6 +26,9 @@
         <module name="configservice" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="polyinformatique-common" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
