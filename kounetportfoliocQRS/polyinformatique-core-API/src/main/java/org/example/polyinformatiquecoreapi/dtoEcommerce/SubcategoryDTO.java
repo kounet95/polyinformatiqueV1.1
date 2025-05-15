@@ -3,9 +3,13 @@ package org.example.polyinformatiquecoreapi.dtoEcommerce;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class SubcategoryDTO {
     private String id;
 

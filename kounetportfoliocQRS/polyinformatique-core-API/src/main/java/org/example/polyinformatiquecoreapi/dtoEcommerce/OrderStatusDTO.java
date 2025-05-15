@@ -1,14 +1,12 @@
 package org.example.polyinformatiquecoreapi.dtoEcommerce;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Builder
 public class OrderStatusDTO {
     private String id;
