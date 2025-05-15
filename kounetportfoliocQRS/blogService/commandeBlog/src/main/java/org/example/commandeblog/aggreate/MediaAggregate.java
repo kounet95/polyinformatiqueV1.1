@@ -1,5 +1,7 @@
 package org.example.commandeblog.aggreate;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -16,8 +18,10 @@ import java.util.List;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
-@Slf4j
 @Aggregate
+@Slf4j
+@Getter
+@Setter
 public class MediaAggregate {
 
     @AggregateIdentifier
