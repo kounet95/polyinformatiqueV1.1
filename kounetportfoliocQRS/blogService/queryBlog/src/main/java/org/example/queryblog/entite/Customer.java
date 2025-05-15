@@ -1,11 +1,10 @@
-package com.example.polyinformatiquecommon;
+package org.example.queryblog.entite;
 
 import com.example.polyinformatiquecommon.blog.Comment;
 import com.example.polyinformatiquecommon.blog.Item;
 import com.example.polyinformatiquecommon.ecommerce.Orderecommerce;
 import jakarta.persistence.*;
 import lombok.*;
-
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;

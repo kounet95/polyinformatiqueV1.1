@@ -8,12 +8,17 @@ import org.example.queryblog.repos.UtilisateurRepos;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 @SpringBootApplication
+@EntityScan(basePackages = {
+        "com.example.polyinformatiquecommon.blog",
+        "com.example.polyinformatiquecommon"
+})
 public class QueryBlogApplication {
 
     public static void main(String[] args) {
