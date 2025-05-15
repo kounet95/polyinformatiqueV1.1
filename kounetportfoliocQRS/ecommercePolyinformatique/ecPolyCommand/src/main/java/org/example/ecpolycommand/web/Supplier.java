@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.SupplierDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class Supplier {
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> createSupplier(@RequestBody SupplierDTO supplier) {
+    public CompletableFuture<String> createSupplier(@Valid @RequestBody SupplierDTO supplier) {
         String supplierId = UUID.randomUUID().toString();
         SupplierDTO supplierDTO = new SupplierDTO(
                 supplierId,

@@ -1,16 +1,14 @@
 package org.example.commandeblog.web;
 
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import jakarta.validation.Valid;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.example.polyinformatiquecoreapi.commands.CreateTagCommand;
-import org.example.polyinformatiquecoreapi.commands.DeleteTagCommand;
+import org.example.commandeblog.service.TagCommandService;
 import org.example.polyinformatiquecoreapi.dto.TagDTO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 @RestController
@@ -18,17 +16,21 @@ import java.util.stream.Stream;
 @CrossOrigin
 public class TagController {
 
-    private final CommandGateway commandGateway;
+    private final TagCommandService tagCommandService;
     private final EventStore eventStore;
 
-    public TagController(CommandGateway commandGateway, EventStore eventStore) {
-        this.commandGateway = commandGateway;
+    public TagController(TagCommandService tagCommandService, EventStore eventStore) {
+        this.tagCommandService = tagCommandService;
         this.eventStore = eventStore;
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> create(@RequestBody TagDTO dto) {
-        return commandGateway.send(new CreateTagCommand(UUID.randomUUID().toString(), dto));
+    public ResponseEntity<Void> create(@RequestBody @Valid TagDTO dto) {
+        if (dto.getId() == null || dto.getId().isEmpty()) {
+            dto.setId(UUID.randomUUID().toString());
+        }
+        tagCommandService.createTag(dto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/events/{id}")
@@ -42,7 +44,8 @@ public class TagController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public CompletableFuture<String> deleteTag(@PathVariable String id) {
-        return commandGateway.send(new DeleteTagCommand(id));
+    public ResponseEntity<Void> deleteTag(@PathVariable String id) {
+        tagCommandService.deleteTag(id);
+        return ResponseEntity.ok().build();
     }
 }

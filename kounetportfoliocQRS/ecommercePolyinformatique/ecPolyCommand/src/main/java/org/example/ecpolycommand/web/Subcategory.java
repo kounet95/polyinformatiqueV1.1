@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.SubcategoryDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class Subcategory {
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> createSubcategory(@RequestBody SubcategoryDTO subcategory) {
+    public CompletableFuture<String> createSubcategory(@Valid @RequestBody SubcategoryDTO subcategory) {
         String subcategoryId = UUID.randomUUID().toString();
         SubcategoryDTO subcategoryDTO = new SubcategoryDTO(
                 subcategoryId,

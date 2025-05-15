@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.StockDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class Stock {
     }
 
     @PostMapping("/add")
-    public CompletableFuture<String> addStock(@RequestBody StockDTO stock) {
+    public CompletableFuture<String> addStock(@Valid @RequestBody StockDTO stock) {
         String stockId = UUID.randomUUID().toString();
         StockDTO stockDTO = new StockDTO(
                 stockId,

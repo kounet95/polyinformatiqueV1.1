@@ -28,7 +28,7 @@ public class ArticleDTO implements Serializable {
     @NotBlank(message = "Content cannot be blank")
     @Size(min = 10, max = 1000, message = "Content must be between 10 and 1000 characters")
     private String content;
-
+   @NotBlank(message = "urlMedia cannot be blank")
     private String urlMedia;
     @NotBlank(message = "Title cannot be blank")
     @Size(min = 5, max = 100, message = "Title must be between 5 and 100 characters")

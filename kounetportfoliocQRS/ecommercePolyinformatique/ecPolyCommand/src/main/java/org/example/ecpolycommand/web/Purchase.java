@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.PurchaseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class Purchase {
     }
 
     @PostMapping("/receive")
-    public CompletableFuture<String> receivePurchase(@RequestBody PurchaseDTO purchase) {
+    public CompletableFuture<String> receivePurchase(@Valid @RequestBody PurchaseDTO purchase) {
         String purchaseId = UUID.randomUUID().toString();
         PurchaseDTO purchaseDTO = new PurchaseDTO(
                 purchaseId,

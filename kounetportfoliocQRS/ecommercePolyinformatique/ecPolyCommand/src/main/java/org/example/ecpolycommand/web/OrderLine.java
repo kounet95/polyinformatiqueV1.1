@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.OrderLineDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -25,19 +26,18 @@ public class OrderLine {
         this.eventStore = eventStore;
     }
 
-
-     @PostMapping("/create")
-     public CompletableFuture<String> createOrderLine(@RequestBody OrderLineDTO orderLine) {
-         String orderLineId = UUID.randomUUID().toString();
-         OrderLineDTO orderLineDTO = new OrderLineDTO(
-                 orderLineId,
-                 orderLine.getOrderId(),
-                 orderLine.getProductSizeId(),
-                 orderLine.getQty()
-         );
-         AddProductToOrderCommand command = new AddProductToOrderCommand (orderLineId, orderLineDTO);
-         return commandGateway.send(command);
-     }
+    @PostMapping("/create")
+    public CompletableFuture<String> createOrderLine(@Valid @RequestBody OrderLineDTO orderLine) {
+        String orderLineId = UUID.randomUUID().toString();
+        OrderLineDTO orderLineDTO = new OrderLineDTO(
+                orderLineId,
+                orderLine.getOrderId(),
+                orderLine.getProductSizeId(),
+                orderLine.getQty()
+        );
+        AddProductToOrderCommand command = new AddProductToOrderCommand(orderLineId, orderLineDTO);
+        return commandGateway.send(command);
+    }
 
     @GetMapping("/events/{aggregateId}")
     public Stream<?> eventsStream(@PathVariable String aggregateId) {
