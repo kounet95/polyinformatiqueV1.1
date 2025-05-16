@@ -10,7 +10,8 @@ import org.example.polyinformatiquecoreapi.event.CommentAddedEvent;
 import org.example.polyinformatiquecoreapi.event.CommentDeletedEvent;
 import org.example.polyinformatiquecoreapi.event.CommentEditedEvent;
 import org.example.polyinformatiquecoreapi.query.WatchCommentQuery;
-import com.example.polyinformatiquecommon.blog.Comment;
+
+import org.example.queryblog.entite.Comment;
 import org.example.queryblog.mapper.CommentMapper;
 import org.example.queryblog.query.GetAllCommentQuery;
 import org.example.queryblog.query.GetCommentByIdQuery;

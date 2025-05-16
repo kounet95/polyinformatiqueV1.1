@@ -2,7 +2,7 @@ package org.example.ecpolyquery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.example.polyinformatiquecommon.Customer;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;

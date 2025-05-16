@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.ProductDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -25,25 +26,24 @@ public class Product {
         this.eventStore = eventStore;
     }
 
-
-     @PostMapping("/create")
-     public CompletableFuture<String> createProduct(@RequestBody ProductDTO product) {
-         String productId = UUID.randomUUID().toString();
-         ProductDTO productDTO = new ProductDTO(
-                 productId,
-                 product.getName(),
-                 product.getDescription(),
-                 product.getPrice(),
-                 product.getCreatedAt(),
-                 product.getClosedAt(),
-                 product.getSubcategoryId(),
-                 product.getSocialGroupId(),
-                 product.getImageUrl(),
-                 product.isActive()
-         );
-         CreateProductCommand command = new CreateProductCommand(productId, productDTO);
-         return commandGateway.send(command);
-     }
+    @PostMapping("/create")
+    public CompletableFuture<String> createProduct(@Valid @RequestBody ProductDTO product) {
+        String productId = UUID.randomUUID().toString();
+        ProductDTO productDTO = new ProductDTO(
+                productId,
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getCreatedAt(),
+                product.getClosedAt(),
+                product.getSubcategoryId(),
+                product.getSocialGroupId(),
+                product.getImageUrl(),
+                product.getIsActive()
+        );
+        CreateProductCommand command = new CreateProductCommand(productId, productDTO);
+        return commandGateway.send(command);
+    }
 
     @GetMapping("/events/{aggregateId}")
     public Stream<?> eventsStream(@PathVariable String aggregateId) {

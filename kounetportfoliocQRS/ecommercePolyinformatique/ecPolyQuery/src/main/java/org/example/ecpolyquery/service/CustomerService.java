@@ -3,8 +3,9 @@ package org.example.ecpolyquery.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
+import org.example.ecpolyquery.entity.Customer;
 import org.example.ecpolyquery.repos.CustomerRepository;
-import com.example.polyinformatiquecommon.Customer;
+
 import org.example.polyinformatiquecoreapi.dtoEcommerce.CustomerEcommerceDTO;
 import org.example.polyinformatiquecoreapi.eventEcommerce.CustomerCreatedEvent;
 import org.example.polyinformatiquecoreapi.eventEcommerce.CustomerDeletedEvent;

@@ -4,13 +4,14 @@ package org.example.queryblog.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
-import com.example.polyinformatiquecommon.Customer;
-import com.example.polyinformatiquecommon.blog.Comment;
-import com.example.polyinformatiquecommon.blog.Item;
+
 import org.example.polyinformatiquecoreapi.event.CommentAddedEvent;
 import org.example.polyinformatiquecoreapi.event.CommentEditedEvent;
 import org.example.polyinformatiquecoreapi.event.CommentDeletedEvent;
 import org.example.polyinformatiquecoreapi.event.ItemDeletedEvent;
+import org.example.queryblog.entite.Comment;
+import org.example.queryblog.entite.Customer;
+import org.example.queryblog.entite.Item;
 import org.example.queryblog.repos.CommentRepository;
 import org.example.queryblog.repos.IteamRepository;
 import org.example.queryblog.repos.UtilisateurRepos;

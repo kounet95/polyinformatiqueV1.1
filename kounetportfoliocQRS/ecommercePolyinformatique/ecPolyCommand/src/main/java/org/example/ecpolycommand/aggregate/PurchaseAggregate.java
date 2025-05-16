@@ -1,5 +1,10 @@
 package org.example.ecpolycommand.aggregate;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -17,12 +22,24 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
  *   => Événement : StockIncreased(productId, size, qty)
  * Projection : ProductStockView, SupplierInventoryView
  */
-
 @Aggregate
+@Slf4j
+@Getter
+@Setter
 public class PurchaseAggregate {
 
     @AggregateIdentifier
     private String purchaseId;
+
+    private String supplierId;
+
+    private String createdAt;
+
+
+    private String status;
+
+
+    private double total;
 
     public PurchaseAggregate() {}
 

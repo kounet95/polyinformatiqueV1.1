@@ -1,5 +1,8 @@
 package org.example.ecpolycommand.aggregate;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -15,6 +18,9 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
  * Category Aggregate for handling category-related commands
  */
 @Aggregate
+@Slf4j
+@Getter
+@Setter
 public class CategoryAggregate {
 
     @AggregateIdentifier

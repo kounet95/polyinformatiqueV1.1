@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.SocialGroupDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class SocialGroup {
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> createSocialGroup(@RequestBody SocialGroupDTO socialGroup) {
+    public CompletableFuture<String> createSocialGroup(@Valid @RequestBody SocialGroupDTO socialGroup) {
         String socialGroupId = UUID.randomUUID().toString();
         SocialGroupDTO socialGroupDTO = new SocialGroupDTO(
                 socialGroupId,

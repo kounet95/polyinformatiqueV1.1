@@ -1,16 +1,14 @@
 package org.example.commandeblog.web;
 
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import jakarta.validation.Valid;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.example.polyinformatiquecoreapi.commands.CreateDomainCommand;
-import org.example.polyinformatiquecoreapi.commands.DeleteCategoryCommand;
+import org.example.commandeblog.service.DomainCommandService;
 import org.example.polyinformatiquecoreapi.dto.DomainDTO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 @RestController
@@ -18,18 +16,21 @@ import java.util.stream.Stream;
 @CrossOrigin
 public class CategoryController {
 
-    private final CommandGateway commandGateway;
+    private final DomainCommandService domainCommandService;
     private final EventStore eventStore;
 
-    public CategoryController(CommandGateway commandGateway, EventStore eventStore) {
-        this.commandGateway = commandGateway;
+    public CategoryController(DomainCommandService domainCommandService, EventStore eventStore) {
+        this.domainCommandService = domainCommandService;
         this.eventStore = eventStore;
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> create(@RequestBody DomainDTO dto) {
-        return commandGateway.send(new CreateDomainCommand(
-                UUID.randomUUID().toString(), dto));
+    public ResponseEntity<Void> create(@RequestBody @Valid DomainDTO dto) {
+        if (dto.getId() == null || dto.getId().isEmpty()) {
+            dto.setId(UUID.randomUUID().toString());
+        }
+        domainCommandService.createDomain(dto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/events/{id}")
@@ -43,7 +44,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public CompletableFuture<String> deleteCategory(@PathVariable String id) {
-        return commandGateway.send(new DeleteCategoryCommand(id));
+    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
+        domainCommandService.deleteDomain(id);
+        return ResponseEntity.ok().build();
     }
 }

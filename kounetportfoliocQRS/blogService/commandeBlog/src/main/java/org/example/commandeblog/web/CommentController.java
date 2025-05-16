@@ -1,16 +1,14 @@
 package org.example.commandeblog.web;
 
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import jakarta.validation.Valid;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.example.polyinformatiquecoreapi.commands.AddCommentCommand;
-import org.example.polyinformatiquecoreapi.commands.DeleteCommentCommand;
+import org.example.commandeblog.service.CommentCommandService;
 import org.example.polyinformatiquecoreapi.dto.CommentDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,28 +17,27 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class CommentController {
 
-    private final CommandGateway commandGateway;
+    private final CommentCommandService commentCommandService;
     private final EventStore eventStore;
 
-    public CommentController(CommandGateway commandGateway, EventStore eventStore) {
-        this.commandGateway = commandGateway;
+    public CommentController(CommentCommandService commentCommandService, EventStore eventStore) {
+        this.commentCommandService = commentCommandService;
         this.eventStore = eventStore;
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> create(@RequestBody CommentDTO dto) {
-        String commentId = UUID.randomUUID().toString();
-
-        return commandGateway.send(
-                new AddCommentCommand(commentId,  dto)
-        );
+    public ResponseEntity<Void> create(@RequestBody @Valid CommentDTO dto) {
+        if (dto.getId() == null || dto.getId().isEmpty()) {
+            dto.setId(UUID.randomUUID().toString());
+        }
+        commentCommandService.createComment(dto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{commentId}")
-    public CompletableFuture<String> delete(@PathVariable String commentId, @RequestParam String itemId) {
-        return commandGateway.send(
-                new DeleteCommentCommand(itemId, commentId)
-        );
+    public ResponseEntity<Void> delete(@PathVariable String commentId) {
+        commentCommandService.deleteComment(commentId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/events/{id}")

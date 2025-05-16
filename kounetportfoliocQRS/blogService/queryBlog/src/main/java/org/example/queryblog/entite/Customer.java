@@ -1,8 +1,5 @@
 package org.example.queryblog.entite;
 
-import com.example.polyinformatiquecommon.blog.Comment;
-import com.example.polyinformatiquecommon.blog.Item;
-import com.example.polyinformatiquecommon.ecommerce.Orderecommerce;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,9 +34,7 @@ public class Customer {
     private String email;
     private String phone;
 
-    // Relations e-commerce
-    @OneToMany(mappedBy = "customer")
-    private List<Orderecommerce> orders;
+
 
     // Relations blog
     @OneToMany

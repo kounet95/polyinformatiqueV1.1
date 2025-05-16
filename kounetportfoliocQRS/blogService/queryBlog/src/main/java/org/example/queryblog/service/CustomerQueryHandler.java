@@ -3,9 +3,10 @@ package org.example.queryblog.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.queryhandling.QueryHandler;
-import com.example.polyinformatiquecommon.Customer;
+
 import org.example.polyinformatiquecoreapi.dto.CustomerBlogDTO;
 
+import org.example.queryblog.entite.Customer;
 import org.example.queryblog.mapper.CustomerMapper;
 import org.example.queryblog.query.GetAllAuthorQuery;
 import org.example.queryblog.query.GetAuthorByIdQuery;

@@ -1,5 +1,7 @@
 package org.example.commandeblog.aggreate;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -15,9 +17,11 @@ import org.example.polyinformatiquecoreapi.event.CommentEditedEvent;
 import org.example.polyinformatiquecoreapi.event.CommentDeletedEvent;
 
 import java.time.LocalDate;
-
 @Aggregate
 @Slf4j
+@Getter
+@Setter
+
 public class CommentAggregate {
 
     @AggregateIdentifier
@@ -49,10 +53,15 @@ public class CommentAggregate {
 
     @CommandHandler
     public void handle(EditCommentCommand command) {
-        if (!command.getCommentId().equals(this.idComment)) {
-            throw new IllegalArgumentException("Comment ID mismatch");
-        }
-        AggregateLifecycle.apply(new CommentEditedEvent(command.getId(), command.getNewContent()));
+        if (!command.getCommentDTOOldest().getId().equals(this.idComment)) {
+        throw new IllegalArgumentException("Comment ID mismatch");
+    }
+  AggregateLifecycle.apply(new CommentEditedEvent(
+        command.getId(),
+          command.getCommentDTOOldest().getId(),
+            command.getCommentDTOOldest().getContenu()
+
+    ));
     }
 
     @EventSourcingHandler
