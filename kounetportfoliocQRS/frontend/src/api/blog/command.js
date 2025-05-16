@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8888/COMMANDEBLOG';
+const BASE_URL = 'http://localhost:8888/commandeblog';
 
 // Blog API - Command
 export const createArticle = async (articleData) => {

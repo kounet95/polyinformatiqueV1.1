@@ -16,6 +16,8 @@ import BlogPage from "./pages/website/BlogPage";
 import SignInSignUpPage from "./pages/SignInSignUpPage";
 import CartPage from "./pages/shop/CartPage";
 import DetailPage from "./pages/shop/DetailPage";
+import AuthorCreateForm from "./components/website/customer/AuthorCreateForm";
+import BlogListComponent from "./components/website/BlogListComponent";
 
 function App() {
     const routes = useRoutes([
@@ -24,13 +26,14 @@ function App() {
         { path: '/pricing', element: <PricingPage /> },
         { path: '/services', element: <ServicePage /> },
         { path: '/team', element: <TeamPage /> },
-        { path: '/blog', element: <BlogPage /> },
+        { path: '/blog', element: <BlogListComponent /> },
         { path: '/blog/:id', element: <BlogDetailsPage /> },
         { path: '/blog/new', element: <BlogFormPage /> },
         { path: '/domain/new', element: <DomainFormPage /> },
         { path: '/domain', element: <DomainPage /> },
         { path: '/cart', element: <CartPage /> },
         { path: '/product-details', element: <DetailPage /> },
+        { path: '/forcustomerblog', element: <AuthorCreateForm /> },
 
         { path: '/sign', element: <SignInSignUpPage /> },
 

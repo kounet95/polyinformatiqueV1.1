@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8888/QUERYBLOG';
+const BASE_URL = 'http://localhost:8888/queryblog';
 
 // Blog API - Query
 export const getAllArticles = async () => {
