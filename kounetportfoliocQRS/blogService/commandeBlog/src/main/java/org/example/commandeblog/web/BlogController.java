@@ -4,6 +4,7 @@ import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.example.commandeblog.service.ArticleCommandService;
 import org.example.commandeblog.service.EventCommandService;
 import org.example.commandeblog.service.NewsCommandService;
+import org.example.commandeblog.service.StorageService;
 import org.example.polyinformatiquecoreapi.dto.ArticleDTO;
 import org.example.polyinformatiquecoreapi.dto.EventDTO;
 import org.example.polyinformatiquecoreapi.dto.NewsDTO;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -24,17 +27,19 @@ public class BlogController {
     private final NewsCommandService newsCommandService;
     private final EventCommandService eventCommandService;
     private final EventStore eventStore;
+    private final StorageService imageStorageService;
 
     public BlogController(
             ArticleCommandService articleCommandService,
             NewsCommandService newsCommandService,
             EventCommandService eventCommandService,
-            EventStore eventStore
+            EventStore eventStore, StorageService imageStorageService
     ) {
         this.articleCommandService = articleCommandService;
         this.newsCommandService = newsCommandService;
         this.eventCommandService = eventCommandService;
         this.eventStore = eventStore;
+        this.imageStorageService = imageStorageService;
     }
 
     @PostMapping("/create")
@@ -104,7 +109,16 @@ public class BlogController {
     public Stream<?> eventsStream(@PathVariable String aggregateId) {
         return eventStore.readEvents(aggregateId).asStream();
     }
-
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String imageUrl = imageStorageService.uploadFile(file);
+            return ResponseEntity.ok(imageUrl);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Image upload failed: " + e.getMessage());
+        }
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> exceptionHandler(Exception exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
