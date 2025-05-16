@@ -44,14 +44,30 @@ public class BlogController {
         this.imageStorageService = imageStorageService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createArticle(@Valid @RequestBody ArticleDTO article) {
-        if (article.getId() == null || article.getId().isEmpty()) {
-            article.setId(UUID.randomUUID().toString());
+    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> createArticle(
+            @RequestPart("article") @Valid ArticleDTO article,
+            @RequestPart(value = "media", required = false) MultipartFile mediaFile
+    ) {
+        try {
+            if (article.getId() == null || article.getId().isEmpty()) {
+                article.setId(UUID.randomUUID().toString());
+            }
+
+            // Upload de l'image si présente
+            if (mediaFile != null && !mediaFile.isEmpty()) {
+                String imageUrl = imageStorageService.uploadImage(mediaFile);
+                article.setUrlMedia(imageUrl); // supposons que ArticleDTO ait setUrlMedia()
+            }
+
+            articleCommandService.createArticle(article);
+            return ResponseEntity.ok().build();
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        articleCommandService.createArticle(article);
-        return ResponseEntity.ok().build();
     }
+
 
     @PostMapping("/create-news")
     public ResponseEntity<Void> createNews(@Valid @RequestBody NewsDTO news) {
