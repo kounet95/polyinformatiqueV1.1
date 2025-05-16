@@ -3,8 +3,9 @@ package org.example.commandeblog.web;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.example.commandeblog.service.ArticleCommandService;
 import org.example.commandeblog.service.EventCommandService;
+import org.example.commandeblog.service.ImageStorageService;
 import org.example.commandeblog.service.NewsCommandService;
-import org.example.commandeblog.service.StorageService;
+
 import org.example.polyinformatiquecoreapi.dto.ArticleDTO;
 import org.example.polyinformatiquecoreapi.dto.EventDTO;
 import org.example.polyinformatiquecoreapi.dto.NewsDTO;
@@ -27,18 +28,19 @@ public class BlogController {
     private final NewsCommandService newsCommandService;
     private final EventCommandService eventCommandService;
     private final EventStore eventStore;
-    private final StorageService imageStorageService;
+    private final ImageStorageService imageStorageService;
 
     public BlogController(
             ArticleCommandService articleCommandService,
             NewsCommandService newsCommandService,
             EventCommandService eventCommandService,
-            EventStore eventStore, StorageService imageStorageService
+            EventStore eventStore, ImageStorageService imageStorageService
     ) {
         this.articleCommandService = articleCommandService;
         this.newsCommandService = newsCommandService;
         this.eventCommandService = eventCommandService;
         this.eventStore = eventStore;
+
         this.imageStorageService = imageStorageService;
     }
 
@@ -112,7 +114,7 @@ public class BlogController {
     @PostMapping("/upload-image")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
-            String imageUrl = imageStorageService.uploadFile(file);
+            String imageUrl = imageStorageService.uploadImage(file);
             return ResponseEntity.ok(imageUrl);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
