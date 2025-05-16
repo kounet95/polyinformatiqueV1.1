@@ -26,7 +26,7 @@ public class InvoiceAggregate {
     private String invoiceId;
     private String orderId;
     private double amount;
-    private boolean paid;
+    private String paymentStatus;
 
     public InvoiceAggregate() {}
 
@@ -42,6 +42,6 @@ public class InvoiceAggregate {
          this.invoiceId = event.getId();
          this.orderId = event.getInvoiceDTO().getOrderId();
          this.amount = event.getInvoiceDTO().getAmount();
-         this.paid = false;
+         this.paymentStatus = event.getInvoiceDTO().getPaymentStatus();
      }
 }

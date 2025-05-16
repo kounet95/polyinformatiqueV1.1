@@ -39,7 +39,7 @@ public class Product {
                 product.getSubcategoryId(),
                 product.getSocialGroupId(),
                 product.getImageUrl(),
-                product.isActive()
+                product.getIsActive()
         );
         CreateProductCommand command = new CreateProductCommand(productId, productDTO);
         return commandGateway.send(command);

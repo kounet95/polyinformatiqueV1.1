@@ -1,5 +1,7 @@
 package org.example.ecpolycommand.aggregate;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,16 @@ public class PurchaseAggregate {
 
     @AggregateIdentifier
     private String purchaseId;
+
+    private String supplierId;
+
+    private String createdAt;
+
+
+    private String status;
+
+
+    private double total;
 
     public PurchaseAggregate() {}
 

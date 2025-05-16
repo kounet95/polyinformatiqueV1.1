@@ -53,10 +53,15 @@ public class CommentAggregate {
 
     @CommandHandler
     public void handle(EditCommentCommand command) {
-        if (!command.getCommentId().equals(this.idComment)) {
-            throw new IllegalArgumentException("Comment ID mismatch");
-        }
-        AggregateLifecycle.apply(new CommentEditedEvent(command.getId(), command.getNewContent()));
+        if (!command.getCommentDTOOldest().getId().equals(this.idComment)) {
+        throw new IllegalArgumentException("Comment ID mismatch");
+    }
+  AggregateLifecycle.apply(new CommentEditedEvent(
+        command.getId(),
+          command.getCommentDTOOldest().getId(),
+            command.getCommentDTOOldest().getContenu()
+
+    ));
     }
 
     @EventSourcingHandler

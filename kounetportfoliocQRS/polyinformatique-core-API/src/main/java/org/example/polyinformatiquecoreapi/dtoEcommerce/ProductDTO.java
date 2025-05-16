@@ -38,6 +38,46 @@ public class ProductDTO {
     @NotBlank(message = "Image URL cannot be blank")
     private String imageUrl;
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getSocialGroupId() {
+        return socialGroupId;
+    }
+
+    public String getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public String getClosedAt() {
+        return closedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     @NotNull(message = "isActive cannot be null")
     private Boolean isActive;
 }

@@ -40,6 +40,38 @@ public class CustomerEcommerceDTO {
     @NotBlank(message = "Billing address cannot be blank")
     private String billingAddress;
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     @NotNull(message = "CreatedAt cannot be null")
     private LocalDateTime createdAt;
 }

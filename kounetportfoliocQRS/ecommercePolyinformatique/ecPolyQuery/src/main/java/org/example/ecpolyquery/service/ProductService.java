@@ -59,7 +59,7 @@ public class ProductService {
                 .description(productDTO.getDescription())
                 .createdAt(createdAt)
                 .closedAt(closedAt)
-                .isActive(productDTO.isActive())
+                .isActive(productDTO.getIsActive())
                 .subcategory(subcategory)
                 .socialGroup(socialGroup)
                 .sizes(new ArrayList<>())
@@ -110,7 +110,7 @@ public class ProductService {
                     // Update other fields
                     product.setName(productDTO.getName());
                     product.setDescription(productDTO.getDescription());
-                    product.setActive(productDTO.isActive());
+                    product.setActive(productDTO.getIsActive());
 
                     productRepository.save(product);
                     log.info("Product updated with ID: {}", product.getId());

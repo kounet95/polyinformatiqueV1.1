@@ -1,4 +1,4 @@
-package org.example.commandeblog.mapper.imple;
+package org.example.commandeblog.mapper;
 
 import org.example.commandeblog.aggreate.ItemAggregate;
 import org.example.polyinformatiquecoreapi.dto.EventDTO;

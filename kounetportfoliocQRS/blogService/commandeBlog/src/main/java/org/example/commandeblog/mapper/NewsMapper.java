@@ -1,11 +1,12 @@
-package org.example.commandeblog.mapper.imple;
+package org.example.commandeblog.mapper;
 
 import org.example.commandeblog.aggreate.ItemAggregate;
 import org.example.polyinformatiquecoreapi.dto.NewsDTO;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Component
 public class NewsMapper {
     public ItemAggregate toAggregate(NewsDTO dto) {
         if (dto == null) return null;

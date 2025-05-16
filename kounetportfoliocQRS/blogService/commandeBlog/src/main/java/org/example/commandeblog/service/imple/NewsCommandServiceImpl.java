@@ -1,9 +1,10 @@
 package org.example.commandeblog.service.imple;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.example.commandeblog.mapper.NewsMapper;
 import org.example.commandeblog.service.NewsCommandService;
 import org.example.polyinformatiquecoreapi.dto.NewsDTO;
-import org.example.commandeblog.mapper.NewsCommandMapper;
+
 import org.example.polyinformatiquecoreapi.commands.CreateNewsCommand;
 import org.example.polyinformatiquecoreapi.commands.UpdateNewsCommand;
 import org.example.polyinformatiquecoreapi.commands.DeleteItemCommand;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Service;
 public class NewsCommandServiceImpl implements NewsCommandService {
 
     private final CommandGateway commandGateway;
-    private final NewsCommandMapper mapper;
+    private final NewsMapper mapper;
 
-    public NewsCommandServiceImpl(CommandGateway commandGateway, NewsCommandMapper mapper) {
+    public NewsCommandServiceImpl(CommandGateway commandGateway, NewsMapper mapper) {
         this.commandGateway = commandGateway;
         this.mapper = mapper;
     }
