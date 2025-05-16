@@ -9,6 +9,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.OrderLineDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -28,7 +29,7 @@ public class Order {
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> createOrder(@RequestBody OrderDTO order) {
+    public CompletableFuture<String> createOrder(@Valid @RequestBody OrderDTO order) {
         String orderId = UUID.randomUUID().toString();
         OrderDTO orderDTO = new OrderDTO(
                 orderId,
@@ -44,7 +45,7 @@ public class Order {
     }
 
     @PostMapping("/{orderId}/add-product")
-    public CompletableFuture<String> addProductToOrder(@PathVariable String orderId, @RequestBody OrderLineDTO orderLine) {
+    public CompletableFuture<String> addProductToOrder(@PathVariable String orderId, @Valid @RequestBody OrderLineDTO orderLine) {
         String orderLineId = UUID.randomUUID().toString();
         OrderLineDTO orderLineDTO = new OrderLineDTO(
                 orderLineId,
@@ -63,7 +64,7 @@ public class Order {
     }
 
     @PostMapping("/{orderId}/generate-invoice")
-    public CompletableFuture<String> generateInvoice(@PathVariable String orderId, @RequestBody InvoiceDTO invoice) {
+    public CompletableFuture<String> generateInvoice(@PathVariable String orderId, @Valid @RequestBody InvoiceDTO invoice) {
         GenerateInvoiceCommand command = new GenerateInvoiceCommand(orderId, invoice);
         return commandGateway.send(command);
     }

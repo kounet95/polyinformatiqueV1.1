@@ -7,7 +7,8 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.example.polyinformatiquecoreapi.dto.TagDTO;
 import org.example.polyinformatiquecoreapi.event.TagCreatedEvent;
-import com.example.polyinformatiquecommon.blog.Tag;
+
+import org.example.queryblog.entite.Tag;
 import org.example.queryblog.mapper.TagMapper;
 import org.example.queryblog.query.GetAllTagQuery;
 import org.example.queryblog.query.GetTagByIdQuery;

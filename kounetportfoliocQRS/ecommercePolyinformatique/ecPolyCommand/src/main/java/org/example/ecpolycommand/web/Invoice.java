@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.InvoiceDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -25,19 +26,18 @@ public class Invoice {
         this.eventStore = eventStore;
     }
 
-
-     @PostMapping("/create")
-     public CompletableFuture<String> createInvoice(@RequestBody InvoiceDTO invoice) {
-         String invoiceId = UUID.randomUUID().toString();
-         InvoiceDTO invoiceDTO = new InvoiceDTO(
-                 invoiceId,
-                 invoice.getOrderId(),
-                 invoice.getAmount(),
-                    invoice.getPaymentStatus()
-         );
-         GenerateInvoiceCommand command = new GenerateInvoiceCommand(invoiceId, invoiceDTO);
-         return commandGateway.send(command);
-     }
+    @PostMapping("/create")
+    public CompletableFuture<String> createInvoice(@Valid @RequestBody InvoiceDTO invoice) {
+        String invoiceId = UUID.randomUUID().toString();
+        InvoiceDTO invoiceDTO = new InvoiceDTO(
+                invoiceId,
+                invoice.getOrderId(),
+                invoice.getAmount(),
+                invoice.getPaymentStatus()
+        );
+        GenerateInvoiceCommand command = new GenerateInvoiceCommand(invoiceId, invoiceDTO);
+        return commandGateway.send(command);
+    }
 
     @GetMapping("/events/{aggregateId}")
     public Stream<?> eventsStream(@PathVariable String aggregateId) {

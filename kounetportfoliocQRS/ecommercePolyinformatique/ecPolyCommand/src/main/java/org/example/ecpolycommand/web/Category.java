@@ -8,6 +8,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.CategoryDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid; // <-- Ajoute cette import
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,17 +27,16 @@ public class Category {
         this.eventStore = eventStore;
     }
 
-
-     @PostMapping("/create")
-     public CompletableFuture<String> createCategory(@RequestBody CategoryDTO category) {
-         String categoryId = UUID.randomUUID().toString();
-         CategoryDTO categoryDTO = new CategoryDTO(
-                 categoryId,
-                 category.getName()
-         );
-         CreateCategoryCommand command = new CreateCategoryCommand(categoryId, categoryDTO);
-         return commandGateway.send(command);
-     }
+    @PostMapping("/create")
+    public CompletableFuture<String> createCategory(@Valid @RequestBody CategoryDTO category) {
+        String categoryId = UUID.randomUUID().toString();
+        CategoryDTO categoryDTO = new CategoryDTO(
+                categoryId,
+                category.getName()
+        );
+        CreateCategoryCommand command = new CreateCategoryCommand(categoryId, categoryDTO);
+        return commandGateway.send(command);
+    }
 
     @GetMapping("/events/{aggregateId}")
     public Stream<?> eventsStream(@PathVariable String aggregateId) {

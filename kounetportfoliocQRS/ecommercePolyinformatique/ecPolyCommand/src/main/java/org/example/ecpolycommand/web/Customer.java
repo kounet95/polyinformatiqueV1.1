@@ -2,13 +2,13 @@ package org.example.ecpolycommand.web;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-
 import org.example.polyinformatiquecoreapi.commandEcommerce.CreateCustomerCommand;
 import org.example.polyinformatiquecoreapi.commandEcommerce.DeleteCustomerCommand;
 import org.example.polyinformatiquecoreapi.dtoEcommerce.CustomerEcommerceDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -27,24 +27,22 @@ public class Customer {
         this.eventStore = eventStore;
     }
 
-    // Command endpoints will be added here when corresponding commands are created
-    // For example:
-     @PostMapping("/create")
-     public CompletableFuture<String> createCustomer(@RequestBody CustomerEcommerceDTO author ) {
-         String authorId = UUID.randomUUID().toString();
-         CustomerEcommerceDTO authorDTO = new CustomerEcommerceDTO(
-                 authorId,
-                 author.getFirstname(),
-                 author.getEmail(),
-                 author.getLastname(),
-                 author.getPhone(),
-                 author.getShippingAddress(),
-                 author.getBillingAddress(),
-                 author.getCreatedAt()
-         );
-         CreateCustomerCommand command = new CreateCustomerCommand(authorId, authorDTO);
-         return commandGateway.send(command);
-     }
+    @PostMapping("/create")
+    public CompletableFuture<String> createCustomer(@Valid @RequestBody CustomerEcommerceDTO author) {
+        String authorId = UUID.randomUUID().toString();
+        CustomerEcommerceDTO authorDTO = new CustomerEcommerceDTO(
+                authorId,
+                author.getFirstname(),
+                author.getEmail(),
+                author.getLastname(),
+                author.getPhone(),
+                author.getShippingAddress(),
+                author.getBillingAddress(),
+                author.getCreatedAt()
+        );
+        CreateCustomerCommand command = new CreateCustomerCommand(authorId, authorDTO);
+        return commandGateway.send(command);
+    }
 
     @GetMapping("/events/{aggregateId}")
     public Stream<?> eventsStream(@PathVariable String aggregateId) {

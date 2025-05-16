@@ -4,8 +4,7 @@ package org.example.queryblog.entite;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import com.example.polyinformatiquecommon.Customer;
-import com.example.polyinformatiquecommon.blog.Comment;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 

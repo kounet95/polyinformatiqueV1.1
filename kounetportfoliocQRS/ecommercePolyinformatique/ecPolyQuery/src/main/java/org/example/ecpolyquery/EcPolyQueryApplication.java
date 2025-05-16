@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@EntityScan(basePackages = {
-        "com.example.polyinformatiquecommon.ecommerce",
-        "com.example.polyinformatiquecommon"
-})
+
 public class EcPolyQueryApplication {
 
     public static void main(String[] args) {

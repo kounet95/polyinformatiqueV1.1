@@ -7,6 +7,7 @@ import org.example.polyinformatiquecoreapi.dtoEcommerce.ShippingDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class Shipping {
     }
 
     @PostMapping("/create")
-    public CompletableFuture<String> createShipping(@RequestBody ShippingDTO shipping) {
+    public CompletableFuture<String> createShipping(@Valid @RequestBody ShippingDTO shipping) {
         String shippingId = UUID.randomUUID().toString();
         ShippingDTO shippingDTO = new ShippingDTO(
                 shippingId,
