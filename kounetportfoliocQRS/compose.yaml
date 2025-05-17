@@ -5,7 +5,7 @@ services:
     image: 'axoniq/axonserver:latest'
     container_name: axonserver
     environment:
-      - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
+      - AXONIQ_AXONSERVER_STANDALONE=TRUE
     ports:
       - '8024:8024'
       - '8124:8124'
@@ -19,6 +19,7 @@ services:
       start_period: 30s
     networks:
       - polyinfDb-net
+    restart: always
 
   pgvector:
     container_name: polyinfDb
@@ -31,18 +32,46 @@ services:
       - polyinfDb_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - polyinfDb-net
+    restart: always
 
   pgadmin4:
     image: dpage/pgadmin4
+    container_name: pgadmin4
     restart: always
     ports:
-      - "8088:80"
+      - '8088:80'
     environment:
       PGADMIN_DEFAULT_EMAIL: kunet@gmail.com
       PGADMIN_DEFAULT_PASSWORD: kounet
+    networks:
+      - polyinfDb-net
+    depends_on:
+      - pgvector
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://polyinfDb:5432/keycloak_kounet_db
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: k1234
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+    command: start-dev
+    restart: always
+    ports:
+      - '8080:8080'
+    expose:
+      - '8080'
+    depends_on:
+      pgvector:
+        condition: service_started
     networks:
       - polyinfDb-net
 
@@ -61,6 +90,7 @@ services:
       start_period: 30s
     networks:
       - polyinfDb-net
+    restart: always
 
   configservice:
     build: ./configservice
@@ -105,12 +135,15 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
+      keycloak:
+        condition: service_healthy
       axonserver:
         condition: service_healthy
       configservice:
         condition: service_healthy
     networks:
       - polyinfDb-net
+    restart: always
 
   queryBlog:
     build: ./blogService/queryBlog
@@ -131,12 +164,15 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
+      keycloak:
+        condition: service_healthy
       axonserver:
         condition: service_healthy
       commandeBlog:
         condition: service_healthy
     networks:
       - polyinfDb-net
+    restart: always
 
   gatewayservice:
     build: ./getwayservice
@@ -163,6 +199,7 @@ services:
         condition: service_healthy
     networks:
       - polyinfDb-net
+    restart: always
 
   ecPolyCommand:
     build: ./ecommercePolyinformatique/ecPolyCommand
@@ -183,12 +220,15 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
+      keycloak:
+        condition: service_healthy
       axonserver:
         condition: service_healthy
       configservice:
         condition: service_healthy
     networks:
       - polyinfDb-net
+    restart: always
 
   ecPolyQuery:
     build: ./ecommercePolyinformatique/ecPolyQuery
@@ -209,12 +249,15 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
+      keycloak:
+        condition: service_healthy
       axonserver:
         condition: service_healthy
       ecPolyCommand:
         condition: service_healthy
     networks:
       - polyinfDb-net
+    restart: always
 
 volumes:
   polyinfDb_data:
