@@ -28,7 +28,7 @@ function App() {
         { path: '/team', element: <TeamPage /> },
         { path: '/blog', element: <BlogListComponent /> },
         { path: '/blog/:id', element: <BlogDetailsPage /> },
-        { path: '/blog/new', element: <BlogFormPage /> },
+        { path: '/blog/new', element: <CommentFormComponent /> },
         { path: '/domain/new', element: <DomainFormPage /> },
         { path: '/domain', element: <DomainPage /> },
         { path: '/cart', element: <CartPage /> },
